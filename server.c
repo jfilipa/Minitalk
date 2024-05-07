@@ -33,19 +33,22 @@ int	main(int argc, char **argv)
 	pid_t	pid;
 
 	(void)argv;
-	if (argc != 1)
+	if (argc == 1)
+	{
+		pid = getpid();
+		ft_printf("PID: %d\n", pid);
+		ft_printf("Waiting for a message...\n");
+		while (argc == 1)
+		{
+			signal(SIGUSR1, sig_handler);
+			signal(SIGUSR2, sig_handler);
+			pause();
+		}
+	}
+	else
 	{
 		ft_printf("Error: wrong format\n");
 		ft_printf("Try: ./server\n");
-	}
-	pid = getpid();
-	ft_printf("PID: %d\n", pid);
-	ft_printf("Waiting for a message...\n");
-	while (argc == 1)
-	{
-		signal(SIGUSR1, sig_handler);
-		signal(SIGUSR2, sig_handler);
-		pause();
 	}
 	return (0);
 }
